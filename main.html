@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Tabs Example</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles for the table headings and first column */
+        .table-heading {
+            font-size: 1rem; /* Reverted font size for headings */
+        }
+        .first-column {
+            font-size: 1rem; /* Keep the same size for first column data */
+            font-weight: bold; /* Make the first column bold */
+        }
+        .tab-cell {
+            font-size: 0.875rem; /* Match font size with p tag */
+            font-weight: 400; /* Match font weight with p tag */
+        }
+        .active-tab {
+            background-color: #1E8C51; /* Selected tab background color */
+            color: white; /* Selected tab text color */
+        }
+        .tab-link {
+            transition: background-color 0.2s, box-shadow 0.2s; /* Smooth transition */
+        }
+        .tab-link:hover {
+            background-color: #9AD3B9; /* Hover color */
+            color: white; /* Hover text color */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Elevated effect */
+        }
+        /* Mobile styles */
+        .mobile-tab-link {
+            background-color: #1E8C51; /* Mobile tab background color */
+            color: white; /* Mobile tab text color */
+            font-weight: bold; /* Make mobile tab text bold */
+        }
+        /* Custom styles for the table header */
+        .table-header {
+            background-color: #9AD4B9; /* Change heading background color */
+            color: white; /* Change heading text color */
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="container mx-auto p-5">
+        <div class="tabs-container">
+            <!-- Mobile view -->
+            <div class="sm:hidden">
+                <label for="tabs" class="sr-only">Select a tab</label>
+                <select
+                    id="tabs"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    onchange="showTabContent(this.value)"
+                >
+                    <option value="equity">Equity</option>
+                    <option value="currency">Currency</option>
+                    <option value="commodity">Commodity</option>
+                </select>
+            </div>
+          
+            <!-- Desktop view -->
+            <ul class="hidden sm:flex text-sm font-medium text-center text-gray-500 rounded-lg shadow dark:divide-gray-700 dark:text-gray-400 mb-4">
+                <li class="w-full">
+                    <a
+                        href="#"
+                        class="tab-link inline-block w-full p-4 border-r border-gray-200 rounded-s-lg focus:ring-4 focus:ring-blue-300"
+                        onclick="showTabContent('equity')"
+                        aria-current="page"
+                        id="equity-tab"
+                    >Equity</a>
+                </li>
+                <li class="w-full">
+                    <a
+                        href="#"
+                        class="tab-link inline-block w-full p-4 bg-white border-r border-gray-200 hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300"
+                        onclick="showTabContent('currency')"
+                        id="currency-tab"
+                    >Currency</a>
+                </li>
+                <li class="w-full">
+                    <a
+                        href="#"
+                        class="tab-link inline-block w-full p-4 bg-white border-s-0 border-gray-200 rounded-e-lg hover:text-gray-700 hover:bg-gray-50 focus:ring-4"
+                        onclick="showTabContent('commodity')"
+                        id="commodity-tab"
+                    >Commodity</a>
+                </li>
+            </ul>
+
+            <!-- Breathing space for mobile view -->
+            <div class="mt-4"></div>
+
+            <!-- Tab content -->
+            <div id="tab-content">
+                <div id="equity" class="tab-content hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full bg-white border border-gray-200">
+                            <thead>
+                                <tr class="table-header uppercase text-sm leading-normal">
+                                    <th class="py-3 px-6 text-left table-heading"></th>
+                                    <th class="py-3 px-6 text-left table-heading">Equity Delivery</th>
+                                    <th class="py-3 px-6 text-left table-heading">Equity Intraday</th>
+                                    <th class="py-3 px-6 text-left table-heading">Equity Futures</th>
+                                    <th class="py-3 px-6 text-left table-heading">Equity Options</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-600 text-sm font-light">
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 first-column">Brokerage</td>
+                                    <td class="py-3 px-6 tab-cell">0.1% or ₹20/ Order whichever is lower</td>
+                                    <td class="py-3 px-6 tab-cell">0.05% or ₹20/ Order whichever is lower</td>
+                                    <td class="py-3 px-6 tab-cell">0.05% or ₹20/ Order whichever is lower</td>
+                                    <td class="py-3 px-6 tab-cell">₹20/ Executed Order</td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 first-column">STT/CTT</td>
+                                    <td class="py-3 px-6 tab-cell">0.1% on both Buy & Sell</td>
+                                    <td class="py-3 px-6 tab-cell">0.025% on the Sell Side</td>
+                                    <td class="py-3 px-6 tab-cell">0.02% on the Sell Side</td>
+                                    <td class="py-3 px-6 tab-cell">
+                                        <ul class="list-disc pl-5 mt-2">
+                                            <li>0.1% on the Sell Side</li>
+                                            <li>0.125% on exercise</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 first-column">GST</td>
+                                    <td class="py-3 px-6 tab-cell">	@18% on (Brokerage, Exchange Transaction Charges & SEBI Fees)</td>
+                                    <td class="py-3 px-6 tab-cell">	@18% on (Brokerage, Exchange Transaction Charges & SEBI Fees)</td>
+                                    <td class="py-3 px-6 tab-cell">	@18% on (Brokerage, Exchange Transaction Charges & SEBI Fees)</td>
+                                    <td class="py-3 px-6 tab-cell">	@18% on (Brokerage, Exchange Transaction Charges & SEBI Fees)</td>
+                                </tr>
+
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 first-column">Stamp Duty</td>
+                                    <td class="py-3 px-6 tab-cell">0.015% on Buyer ₹1500 per Cr</td>
+                                    <td class="py-3 px-6 tab-cell">0.003% on Buyer ₹300 per Cr</td>
+                                    <td class="py-3 px-6 tab-cell">0.002% on Buyer ₹200 per Cr</td>
+                                    <td class="py-3 px-6 tab-cell">	0.003% on Buyer ₹300 per Cr</td>
+                                </tr>
+
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 first-column">Transaction charges</td>
+                                    <td class="py-3 px-6 tab-cell">
+                                        <ul class="list-disc pl-5 mt-2">
+                                            <li>NSE: ₹297 per Cr</li>
+                                            <li>BSE: ₹375 per Cr</li>
+                                        </ul>
+                                    </td>
+                                    <td class="py-3 px-6 tab-cell">
+                                        <ul class="list-disc pl-5 mt-2">
+                                            <li>NSE: ₹297 per Cr</li>
+                                            <li>BSE: ₹375 per Cr</li>
+                                        </ul>
+                                    </td>
+                                    <td class="py-3 px-6 tab-cell">
+                                        <ul class="list-disc pl-5 mt-2">
+                                            <li>NSE: ₹173 per Cr</li>
+                                            <li>BSE: Nil</li>
+                                        </ul>
+                                    </td>
+                                    <td class="py-3 px-6 tab-cell">
+                                        <ul class="list-disc pl-5 mt-2">
+                                            <li>NSE: ₹3503 per Cr</li>
+                                            <li>BSE: ₹3250 per Cr</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 first-column">IPFT Charges</td>
+                                    <td class="py-3 px-6 tab-cell">NSE: ₹10 per Cr</td>
+                                    <td class="py-3 px-6 tab-cell">NSE: ₹10 per Cr</td>
+                                    <td class="py-3 px-6 tab-cell">NSE: ₹10 per Cr</td>
+                                    <td class="py-3 px-6 tab-cell">NSE: ₹50 per Cr</td>
+                                    
+                                </tr>
+
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 first-column">SEBI Charges</td>
+                                    <td class="py-3 px-6 tab-cell">₹10 per Cr</td>
+                                    <td class="py-3 px-6 tab-cell">₹10 per Cr</td>
+                                    <td class="py-3 px-6 tab-cell">₹10 per Cr</td>
+                                    <td class="py-3 px-6 tab-cell">₹10 per Cr</td>
+                                </tr>
+                                <!-- Add more rows as needed -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="currency" class="tab-content hidden">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200">
+                            <thead>
+                                <tr class="table-header uppercase text-sm leading-normal">
+                                    <th class="py-3 px-6 text-left table-heading"></th>
+                                    <th class="py-3 px-6 text-left table-heading">Currency Futures</th>
+                                    <th class="py-3 px-6 text-left table-heading">Currency Options</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-600 text-sm font-light">
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 first-column">Brokerage</td>
+                                    <td class="py-3 px-6 tab-cell">0.05% or ₹20/ Order whichever is lower</td>
+                                    <td class="py-3 px-6 tab-cell">₹20/ Executed Order</td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 first-column">STT/CTT</td>
+                                    <td class="py-3 px-6 tab-cell">STT: Nil</td>
+                                    <td class="py-3 px-6 tab-cell">STT: Nil</td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 first-column">GST</td>
+                                    <td class="py-3 px-6 tab-cell">@18% on (Brokerage, Exchange Transaction Charges & SEBI Fees)</td>
+                                    <td class="py-3 px-6 tab-cell">@18% on (Brokerage, Exchange Transaction Charges & SEBI Fees)</td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 first-column">Stamp Duty</td>
+                                    <td class="py-3 px-6 tab-cell">0.0001% on Buyer ₹10 per Cr</td>
+                                    <td class="py-3 px-6 tab-cell">0.0001% on Buyer ₹10 Per Cr</td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 first-column">Transaction charges</td>
+                                    <td class="py-3 px-6 tab-cell">NSE: ₹90 per Cr</td>
+                                    <td class="py-3 px-6 tab-cell">NSE: ₹3500 per Cr</td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 first-column">IPFT Charges</td>
+                                    <td class="py-3 px-6 tab-cell">NSE: ₹5 per Cr</td>
+                                    <td class="py-3 px-6 tab-cell">NSE: ₹200 per Cr</td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 first-column">SEBI Charges</td>
+                                    <td class="py-3 px-6 tab-cell">₹10 per Cr</td>
+                                    <td class="py-3 px-6 tab-cell">₹10 per Cr</td>
+                                </tr>
+                                <!-- Add more rows as needed -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="commodity" class="tab-content hidden">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200">
+                            <thead>
+                                <tr class="table-header uppercase text-sm leading-normal">
+                                    <th class="py-3 px-6 text-left table-heading"></th>
+                                    <th class="py-3 px-6 text-left table-heading">Commodities</th>
+                                    <th class="py-3 px-6 text-left table-heading">Commodity Options</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-600 text-sm font-light">
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 first-column">Brokerage</td>
+                                    <td class="py-3 px-6 tab-cell">0.05% or ₹20/ Order whichever is lower</td>
+                                    <td class="py-3 px-6 tab-cell">₹20/ Executed Order</td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 first-column">STT/CTT</td>
+                                    <td class="py-3 px-6 tab-cell">0.01% On Sell Side</td>
+                                    <td class="py-3 px-6 tab-cell">0.05% On Sell Side</td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 first-column">GST</td>
+                                    <td class="py-3 px-6 tab-cell">@18% on (Brokerage, Exchange Transaction Charges & SEBI Fees)</td>
+                                    <td class="py-3 px-6 tab-cell">@18% on (Brokerage, Exchange Transaction Charges & SEBI Fees)</td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 first-column">Stamp Duty</td>
+                                    <td class="py-3 px-6 tab-cell">0.002% on Buyer ₹200 per Cr</td>
+                                    <td class="py-3 px-6 tab-cell">0.003% on Buyer ₹300 per Cr</td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 first-column">Transaction charges</td>
+                                    <td class="py-3 px-6 tab-cell">MCX: ₹210 per Cr</td>
+                                    <td class="py-3 px-6 tab-cell">MCX: ₹4180 per Cr</td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 first-column">SEBI charges</td>
+                                    <td class="py-3 px-6 tab-cell">₹10 per Cr</td>
+                                    <td class="py-3 px-6 tab-cell">₹10 per Cr</td>
+                                </tr>
+                                <!-- Add more rows as needed -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Note on Charges Section -->
+            <div class="mt-8">
+                <div class="text-center mb-4">
+                    <h2 class="text-2xl font-semibold mb-2">Note on Charges</h2>
+                </div>
+                <h3 class="text-lg font-medium mb-2 text-left">Securities Transaction Tax (STT) / 
+                    Commodities Transaction Tax (CTT)</h3>
+                <p class="text-gray-600 text-left mb-4">
+                    STT is the tax levied by the Government when transacting on the securities market through 
+                    any of the stock exchanges. It is levied on both “Buy” and “Sell” 
+                    side when trading results in delivery and only on sell side when trading does not result 
+                    in Delivery (like intraday or in F&O). Trading in currency segment is exempt from STT. 
+                    CTT is levied by the Government when transacting in the commodities market again only on the 
+                    sell side.
+                </p>
+            
+                <h2 class="text-lg font-medium mb-2 text-left">Exchange Transaction Charges</h2>
+                <p class="text-gray-600 text-left mb-4">
+                    Exchange Transaction charges are levied by Exchanges on the traded volume of the customer. 
+                    This is generally specified in 
+                    terms of rupees per Crore of Turnover. Please note that BSE charges higher transaction 
+                    charges separately for various <a href="https://www.bseindia.com/static/members/TFEquity.aspx" target="_blank" class="text-blue-500 hover:underline">
+                        groups of securities
+                    </a>  (P, R, X and Z group XC, XD, XT, Z and ZP)..</p>
+            
+                <h2 class="text-lg font-medium mb-2 text-left">GST</h2>
+                <p class="text-gray-600 text-left mb-4">Tax levied by the government on the services rendered is calculated presently 
+                    @ 18% on brokerage, exchange charges and any other charges for services rendered 
+                    by broker or exchange.</p>
+            
+                <h2 class="text-lg font-medium mb-2 text-left">SEBI Charges</h2>
+                <p class="text-gray-600 text-left mb-4">The SEBI charges is calculated presently @ ₹10 per crore (w.e.f. 01.06.2021) 
+                    for both intraday and delivery trades on the traded volume of the customer in all segments.</p>
+
+                <h2 class="text-lg font-medium mb-2 text-left">IPFT Charges</h2>
+                <p class="text-gray-600 text-left mb-4">The IPFT charges is calculated @ ₹10 per crore of the traded value in NSE Equity Segment & Equity Futures and @ ₹50 per 
+                    crore of the traded value in NSE Equity Options (w.e.f.01.04.2023).</p>
+
+                <h2 class="text-lg font-medium mb-2 text-left">Stamp charges</h2>
+                <p class="text-gray-600 text-left mb-4">Unified Stamp duty on value of contract to be paid by 
+                    Buyer for all transactions across segments.</p>
+
+                <h2 class="text-lg font-medium mb-2 text-left">Call-n-Trade Charges</h2>
+                <p class="text-gray-600 text-left mb-4">A nominal amount of ₹50 + GST is charged extra per 
+                    executed order placed through our dealing desk & Intraday 
+                    (MIS) positions squared by our RMS team.</p>
+
+                <h2 class="text-lg font-medium mb-2 text-left">DP (Depository participant) charges</h2>
+                <p class="text-gray-600 text-left mb-4">AMC (Annual maintenance charges) ₹300 + GST per year.</p>
+                <p class="text-gray-600 text-left mb-4">DP transaction charge of ₹12.50+ GST per ISIN (irrespective of value) 
+                    will be charged for all on-market debit transactions.</p>
+                <p class="text-gray-600 text-left mb-4">For Mutual Fund ₹12.50 + GST per folio (for any value) will be debited for 
+                    Demat redemption.</p>
+                <p class="text-gray-600 text-left mb-4">As per Govt Notification w.e.f. 01st Jul 2020 all Off Market Transactions in 
+                    Demat account would be subject to stamp duty charges on upfront basis @ 0.015% 
+                    of the consideration value.</p>
+                <!-- <p class="text-gray-600 text-left mb-4">DP transaction charge of ₹12.50+ GST per scrip (for any value) will be 
+                    debited for all stock movements from client account to TRADEJINI Margin Account.</p> -->
+
+                <h2 class="text-lg font-medium mb-2 text-left">Payment Gateway charges</h2>
+                <p class="text-gray-600 text-left mb-4">Payment gateway charges of ₹9.00 + GST per transaction.</p>
+
+                <h2 class="text-lg font-medium mb-2 text-left">Margin Pledge / Unpledge charges</h2>
+                <p class="text-gray-600 text-left mb-4">₹32 + GST for Pledging and unpledging of Stocks for Margin benefit.</p>
+
+                <h2 class="text-lg font-medium mb-2 text-left">Margin Penalty charges</h2>
+                <p class="text-gray-600 text-left mb-4">In case of non maintenance of Margins in all Derivative Segments as per Exchange prescribed norms
+                     – Exchanges charges Penalty charges for such shortfall and the same is passed on to the client for details 
+                     please click here on <a href="https://www.nseindia.com/products-services/equity-market-margin-shortfall" target="_blank" class="text-blue-500 hover:underline"> NSE.</a></p>
+            </div>            
+    </div>
+
+    <script>
+        let equityTabClicked = true; // Track if the equity tab was clicked
+
+        function showTabContent(tabName) {
+            // Hide all tab content
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.add('hidden'));
+
+            // Show the selected tab content
+            const selectedContent = document.getElementById(tabName);
+            if (selectedContent) {
+                selectedContent.classList.remove('hidden');
+            }
+
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab-link');
+            tabs.forEach(tab => tab.classList.remove('active-tab', 'text-white'));
+
+            // Add active class to the selected tab
+            const selectedTab = document.getElementById(`${tabName}-tab`);
+            if (selectedTab) {
+                selectedTab.classList.add('active-tab', 'text-white');
+            }
+
+            // Initialize the active class for the Equity tab on load
+            if (equityTabClicked) {
+                const equityTab = document.getElementById('equity-tab');
+                if (equityTab) {
+                    equityTab.classList.add('active-tab', 'text-white');
+                    equityTabClicked = false; // Set flag to false after the first click
+                }
+            }
+        }
+
+        // Initialize to show the first tab content
+        showTabContent('equity');
+    </script>
+</body>
+</html>

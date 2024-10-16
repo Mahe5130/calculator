@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Tradejini Charges</title>
+    <style>
+        /* Custom styles for responsiveness */
+        @media (max-width: 768px) {
+            .flex-col-reverse {
+                flex-direction: column-reverse;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-5">
+
+    <div class="container mx-auto">
+        <!-- Tab Navigation -->
+        <div class="flex space-x-4 mb-5">
+            <button id="equity-fno-tab" class="tab-btn text-white bg-blue-500 px-4 py-2 rounded">Equity & F&O</button>
+            <button id="currency-tab" class="tab-btn text-gray-600 hover:bg-blue-200 px-4 py-2 rounded">Currency</button>
+            <button id="commodity-tab" class="tab-btn text-gray-600 hover:bg-blue-200 px-4 py-2 rounded">Commodity</button>
+        </div>
+
+        <div id="equity-fno-content" class="tab-content hidden">
+            <div class="flex space-x-4 mb-5">
+                <button id="delivery-tab" class="tab-btn text-white bg-blue-500 px-4 py-2 rounded">Delivery</button>
+                <button id="intraday-tab" class="tab-btn text-gray-600 hover:bg-blue-200 px-4 py-2 rounded">Intraday</button>
+                <button id="futures-tab" class="tab-btn text-gray-600 hover:bg-blue-200 px-4 py-2 rounded">Futures</button>
+                <button id="options-tab" class="tab-btn text-gray-600 hover:bg-blue-200 px-4 py-2 rounded">Options</button>
+            </div>
+
+            <div id="trading-content" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Left Column -->
+                <div class="bg-white p-5 rounded shadow">
+                    <h2 class="text-lg font-semibold mb-4">Trade Details</h2>
+                    <div class="mb-4">
+                        <span class="font-medium">Exchange:</span>
+                        <div class="mt-2">
+                            <label class="inline-flex items-center mr-4">
+                                <input type="radio" name="exchange" value="NSE" class="form-radio text-blue-600">
+                                <span class="ml-2">NSE</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="exchange" value="BSE" class="form-radio text-blue-600">
+                                <span class="ml-2">BSE</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block mb-1" for="buy-price">Buy Price:</label>
+                        <input type="number" id="buy-price" class="form-input w-full border rounded px-3 py-2" placeholder="Enter Buy Price">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block mb-1" for="sell-price">Sell Price:</label>
+                        <input type="number" id="sell-price" class="form-input w-full border rounded px-3 py-2" placeholder="Enter Sell Price">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block mb-1" for="quantity">Quantity:</label>
+                        <input type="number" id="quantity" class="form-input w-full border rounded px-3 py-2" placeholder="Enter Quantity">
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="bg-white p-5 rounded shadow">
+                    <h2 class="text-lg font-semibold mb-4">Tradejini Charges</h2>
+                    <div class="mb-2">Brokerage: <span>₹ 0</span></div>
+                    <div class="mb-2">Regulatory Charges: <span>₹ 0</span></div>
+                    <div class="mb-2">Turnover: <span>₹ 0</span></div>
+                    <div class="mb-2">Exchange Transaction Charges: <span>₹ 0</span></div>
+                    <div class="mb-2">GST: <span>₹ 0</span></div>
+                    <div class="mb-2">STT: <span>₹ 0</span></div>
+                    <div class="mb-2">SEBI Charges: <span>₹ 0</span></div>
+                    <div class="mb-2">Stamp Duty: <span>₹ 0</span></div>
+                    <div class="mb-2">NSE IPFT: <span>₹ 0</span></div>
+                    <div class="mb-2">Total Charges: <span>₹ 0</span></div>
+                    <div class="mb-2">Points to Break Even: <span>₹ 0</span></div>
+                    <div class="mb-2">Net P/L: <span>₹ 0</span></div>
+                    <p class="text-sm text-gray-500 mt-4">* DP Charges applicable</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to handle tab navigation
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const tradingContent = document.getElementById('trading-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Hide all tab contents
+                tabContents.forEach(content => content.classList.add('hidden'));
+                // Show selected tab content
+                if (btn.id === 'equity-fno-tab') {
+                    document.getElementById('equity-fno-content').classList.remove('hidden');
+                } else {
+                    document.getElementById('equity-fno-content').classList.add('hidden');
+                }
+                // Reset tab button styles
+                tabBtns.forEach(b => b.classList.remove('bg-blue-500', 'text-white'));
+                // Highlight the selected tab button
+                btn.classList.add('bg-blue-500', 'text-white');
+            });
+        });
+
+        // Handle sub-tab navigation for Delivery, Intraday, Futures, and Options
+        const tradingTabs = ['delivery-tab', 'intraday-tab', 'futures-tab', 'options-tab'];
+        tradingTabs.forEach(tabId => {
+            document.getElementById(tabId).addEventListener('click', () => {
+                // Reset styles and show trading content
+                tradingTabs.forEach(id => {
+                    document.getElementById(id).classList.remove('bg-blue-500', 'text-white');
+                    document.getElementById(id).classList.add('text-gray-600', 'hover:bg-blue-200');
+                });
+                document.getElementById(tabId).classList.add('bg-blue-500', 'text-white');
+
+                // Show the trading content
+                tradingContent.classList.remove('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
